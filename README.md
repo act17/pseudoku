@@ -12,7 +12,7 @@ Version: Alpha 1.0.0 (January 15th, 2023)
 
 # Changelog
 
-	*Alpha 1.0.0 - 2023/01/15*
+  *Alpha 1.0.0 - 2023/01/15*
 - Added the directory ``./src``.
   - Added the file ``./src/main.c``. This file contains the function ``main()``.
   - Added the file ``./src/pseudoku.h``. This is the header file for all functions contained in the folder ``./src/pseudoku``.
