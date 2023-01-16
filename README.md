@@ -4,11 +4,11 @@ A Sudoku-like Puzzle Game
 Version: Alpha 1.0.0 (January 15th, 2023)
 
 # Description
-	Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
+  Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
 
 # Compiling and Usage
-	To compile Pseudoku, simply run the command ``make`` in the source directory. You must have ``gcc`` installed in order to compile the program!
-	To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
+  To compile Pseudoku, simply run the command ``make`` in the source directory. You must have ``gcc`` installed in order to compile the program!
+  To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
 
