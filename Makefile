@@ -1,8 +1,8 @@
-OBJS = src/main.c src/pseudoku/pseudokugen.c src/pseudoku/pseudokudel.c
+OBJS = src/main.c src/pseudoku/pseudokugen.c src/pseudoku/pseudokudel.c src/gui/guiwrapper.c src/gui/guimainmenu.c
 CFLAG = -Wall -Werror -g
 CC = gcc
 INCLUDE =
-LIBS =
+LIBS = -lncurses
 
 pseudoku:${OBJ}
 	${CC} ${CFLAGS} ${INCLUDES} -o $@ ${OBJS} ${LIBS}
