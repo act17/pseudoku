@@ -1,4 +1,4 @@
-OBJS = src/main.c src/pseudoku/pseudokugen.c
+OBJS = src/main.c src/pseudoku/pseudokugen.c src/pseudoku/pseudokudel.c
 CFLAG = -Wall -Werror -g
 CC = gcc
 INCLUDE =
