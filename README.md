@@ -12,7 +12,7 @@ Version: Alpha 1.2.0 (January 19th, 2023)
 
 # Changelog
 
-  *Alpha 1.2.0 - *
+  *Alpha 1.2.0 - 2023/01/19*
 - Added the directory ``./src/gui/``. This includes several files that handle the NCurses GUI. It includes the following files:
   - Added: ``./src/gui/guiwrapper.c``. This includes the function ``void guiwrapper(int Puzzle[9][9], int Answer[9][9])``. It handles potential errors for NCurses, and in the case that they do, it prints error messages. Otherwise, it runs the functions that include NCurses within them.
   - Added: ``./src/gui/guimainmenu.c``. This includes the function ``void guimainmenu(int MaxY, int MaxX)``. It prints a simple box that behaves like a main menu.
