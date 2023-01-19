@@ -2,17 +2,19 @@
 #include <stdio.h>
 #include <time.h>
 
-int main() {
+int main()
+{
 
   int Puzzle[9][9];
-  pseudokugen(Puzzle, time(0));
+  int Answer[9][9];
+  int Seed = time(0);
 
-  for (int y = 0; y < 9; y++) {
-    printf("\n");
-    for (int x = 0; x < 9; x++) {
-      printf("%d ", Puzzle[y][x]);
-    }
-  }
+  pseudokugen(Puzzle, Seed);
+  pseudokugen(Answer, Seed);
+  pseudokudel(Puzzle, Seed, 20);
+
+  guiwrapper(Puzzle, Answer);
+
 
   return 0;
 }
