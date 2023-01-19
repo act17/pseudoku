@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Alpha 1.1.0 (January 18th, 2023)
+Version: Alpha 1.2.0 (January 19th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,17 @@ Version: Alpha 1.1.0 (January 18th, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+
+  *Alpha 1.2.0 - *
+- Added the directory ``./src/gui/``. This includes several files that handle the NCurses GUI. It includes the following files:
+  - Added: ``./src/gui/guiwrapper.c``. This includes the function ``void guiwrapper(int Puzzle[9][9], int Answer[9][9])``. It handles potential errors for NCurses, and in the case that they do, it prints error messages. Otherwise, it runs the functions that include NCurses within them.
+  - Added: ``./src/gui/guimainmenu.c``. This includes the function ``void guimainmenu(int MaxY, int MaxX)``. It prints a simple box that behaves like a main menu.
+- Altered the file ``./src/pseudoku.h`` to include headers for the functions above.
+- Altered the file ``./src/pseudoku/pseudokugen.c`` to no longer include printing diagnostic information.
+- Altered the file ``./src/pseudoku/pseudokudel.c`` to include an extra comment.
+- Altered the file ``./src/main.c`` to include functions included in ``./src/gui/*.c``.
+- Altered the file ``./Makefile`` to include the two new files described at the top of the changelog entry for the current verison.
+- Now all files within the repository are styled with ``astyle`` because Clang and LLVM don't play nice with my install of headless Arch Linux I use to develop this program.
 
   *Alpha 1.1.0 - 2023/01/18*
 - Added a new file ``./src/pseudoku/pseudokudel.c``. This includes the function ``void pseudokudel(int Puzzle[9][9], int Seed, int Difficulty)``. It takes the multidimensional array, ``int Puzzle[9][9]``, and randomly replaces as many entries in the array with zeros as defined by ``int Difficulty``.
