@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Alpha 1.0.0 (January 15th, 2023)
+Version: Alpha 1.1.0 (January 18th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,13 @@ Version: Alpha 1.0.0 (January 15th, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+
+  *Alpha 1.1.0 - 2023/01/18*
+- Added a new file ``./src/pseudoku/pseudokudel.c``. This includes the function ``void pseudokudel(int Puzzle[9][9], int Seed, int Difficulty)``. It takes the multidimensional array, ``int Puzzle[9][9]``, and randomly replaces as many entries in the array with zeros as defined by ``int Difficulty``.
+- Altered ``./src/pseudoku.h``. It now includes the header file definition for the functions in ``pseudokudel.c``.
+- Altered ``./src/main.c``. It now includes ``void pseudokudel(..)``, and will print a whitespace in place of a zero when printing the puzzle.
+- Altered ``./Makefile``. It now includes ``./src/pseudoku/pseudokudel.c``.
+
 
   *Alpha 1.0.0 - 2023/01/15*
 - Added the directory ``./src``.
