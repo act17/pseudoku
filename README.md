@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Alpha 1.2.0 (January 19th, 2023)
+Version: Alpha 1.3.0 (January 19th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,13 @@ Version: Alpha 1.2.0 (January 19th, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+
+  *Alpha 1.3.0 - 2023/01/21*
+  - Added the file ``./src/gui/guigame.c``. This includes the function ``void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed)``. This prints two windows, one with various information, and one that prints out ``Puzzle``. It will be used for the user of the program to actually play the game - obviously.
+  - Altered the file ``./src/gui/guiwrapper.c`` to include a new parameter for the function ``guiwrapper()`` - this is an integer called ``Seed``, and is the actual seed used for Random Number Generation.
+  - Altered the file ``./src/pseudoku.h`` to include ``void guigame()`` and include changes to ``void guiwrapper()``.
+  - Altered the file ``./src/main.c`` to include the usage of ``void guigame()`` and include changes made to ``guiwrapper()``.
+  - Altered the file ``./Makefile`` to include the file ``./src/gui/guigame.c``.
 
   *Alpha 1.2.0 - 2023/01/19*
 - Added the directory ``./src/gui/``. This includes several files that handle the NCurses GUI. It includes the following files:
