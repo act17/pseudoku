@@ -2,8 +2,8 @@
 
 // Here's what we use for the version and date of release.
 char VersionName[6] = "Alpha";
-char VersionNumber[6] = "1.2.0";
-char ReleaseDate[11] = "2023-01-19";
+char VersionNumber[6] = "1.3.0";
+char ReleaseDate[11] = "2023-01-21";
 
 void guimainmenu(int MaxY, int MaxX)
 {
