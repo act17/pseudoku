@@ -13,7 +13,7 @@ int main()
   pseudokugen(Answer, Seed);
   pseudokudel(Puzzle, Seed, 20);
 
-  guiwrapper(Puzzle, Answer);
+  guiwrapper(Puzzle, Answer, Seed);
 
 
   return 0;
