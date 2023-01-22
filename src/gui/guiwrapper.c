@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include "../pseudoku.h"
 
-void guiwrapper(int Puzzle[9][9], int Answer[9][9])
+void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Seed)
 {
 
   // No idea how to error-handle these lmao. Gotta read up.
@@ -16,14 +16,14 @@ void guiwrapper(int Puzzle[9][9], int Answer[9][9])
 
   // In case the screen size is too small:
   if(MaxX < 72 || MaxY < 36)
-    {
-      endwin();
-      printf("\n\nError: Screen size too small!");
-      printf("\n  Required:  Your:");
-      printf("\nX 72         %d",MaxX);
-      printf("\nY 36         %d",MaxY);
-      return;
-    }
+  {
+    endwin();
+    printf("\n\nError: Screen size too small!");
+    printf("\n  Required:  Your:");
+    printf("\nX 72         %d",MaxX);
+    printf("\nY 36         %d",MaxY);
+    return;
+  }
 
   // If the size of the screen passes, we re-define MaxY and MaxX as
   // being the offset used by windows.
@@ -31,6 +31,7 @@ void guiwrapper(int Puzzle[9][9], int Answer[9][9])
   MaxX = (MaxX - 72) / 2;
 
   guimainmenu(MaxY,MaxX);
+  guigame(Puzzle, Answer, MaxY, MaxX, Seed);
 
   endwin();
   return;
