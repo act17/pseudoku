@@ -5,7 +5,7 @@ INCLUDE =
 LIBS = -lncurses
 
 pseudoku:${OBJ}
-	${CC} ${CFLAGS} ${INCLUDES} -o $@ ${OBJS} ${LIBS}
+	${CC} ${CFLAG} ${INCLUDES} -o $@ ${OBJS} ${LIBS}
 
 clean:
 	rm pseudoku
