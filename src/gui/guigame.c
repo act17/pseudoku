@@ -3,7 +3,7 @@
 #include <ncurses.h>
 
 // To be updated, duh.
-char Version[11] = "Beta 1.0.0";
+char Version[11] = "Beta 1.1.0";
 
 void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
@@ -11,12 +11,25 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
   init_pair(1,COLOR_BLACK,COLOR_WHITE);
   init_pair(2,COLOR_CYAN,COLOR_CYAN);
   init_pair(3,COLOR_WHITE,COLOR_RED);
+  init_pair(4,COLOR_BLACK,COLOR_BLUE);
 
   // We also need to call the four integers used for user input:
   int UserInput;
   int UserInputX = 0;
   int UserInputY = 0;
-  int PuzzleBuffer;
+  int PuzzleBuffer = 0;
+
+  // Then, as the final step of preparation, we need to mark down which
+  // of the puzzle spaces are changable.
+  int UnfilledStorage[9][9];
+  for(int y = 0; y < 9; y++) {
+    for(int x = 0; x < 9; x++) {
+      if(Puzzle[y][x] == 0)
+        UnfilledStorage[y][x] = 0;
+      else
+        UnfilledStorage[y][x] = 1;
+    }
+  }
 
   // First we create two windows; one that will display the game,
   // and one that will display extra information.
@@ -54,12 +67,19 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
         if(y == UserInputY && x == UserInputX)
           wattron(MainWindow,A_REVERSE);
 
+        // In the case that the element was originally unfilled,
+        // we print in blue.
+        if(UnfilledStorage[y][x] == 0)
+          wattron(MainWindow,COLOR_PAIR(4));
+
         if(Puzzle[y][x] == 0)
           mvwprintw(MainWindow,(2 * y) + 4,(4 * x) + 18," ");
         else
           mvwprintw(MainWindow,(2 * y) + 4,(4 * x) + 18,"%d",Puzzle[y][x]);
 
+        // This is to undo any potential attribute changes made above.
         wattroff(MainWindow,A_REVERSE);
+        wattron(MainWindow,COLOR_PAIR(1));
       }
     }
 
@@ -100,24 +120,27 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
     // In the case the user presses ENTER:
     case 10:
-      if(Puzzle[UserInputY][UserInputX] != 0)
-        break;
-      echo();
-      while(1) {
-        mvwscanw(MainWindow,(2 * UserInputY) + 4,(4 * UserInputX) + 18,"%d",&PuzzleBuffer);
-        if(PuzzleBuffer > 0 && PuzzleBuffer < 10)
-          break;
-        wattron(InfoWindow,COLOR_PAIR(3));
-        wattron(InfoWindow,A_BOLD);
-        wrefresh(InfoWindow);
-        mvwprintw(InfoWindow,6,1,"Error! Inputted value is not valid!");
+      // First, we check to see if the entry was one of the originally unfilled entries.
+      if(UnfilledStorage[UserInputY][UserInputX] == 0) {
+        echo();
+        // This loop will repeat until the user enters a valid input.
+        do {
+          mvwscanw(MainWindow,(2 * UserInputY) + 4,(4 * UserInputX) + 18,"%d",&PuzzleBuffer);
+          wattron(InfoWindow,COLOR_PAIR(3));
+          wattron(InfoWindow,A_BOLD);
+          wrefresh(InfoWindow);
+          mvwprintw(InfoWindow,6,1,"Error! Inputted value is not valid!");
+        } while(PuzzleBuffer < 1 || PuzzleBuffer > 9);
+        // This routine just clears the error messages, printed above.
+        noecho();
+        wattron(InfoWindow,COLOR_PAIR(1));
+        wattroff(InfoWindow,A_BOLD);
+        mvwprintw(InfoWindow,6,1,"                                     ");
+        // This line just removes any extra characters from the line.
+        mvwprintw(MainWindow,(2 * UserInputY) + 4,(4 * UserInputX) + 18,"    ");
+        Puzzle[UserInputY][UserInputX] = PuzzleBuffer;
+        PuzzleBuffer = 0;
       }
-      // This routine just clears the error messages, printed above.
-      noecho();
-      wattron(InfoWindow,COLOR_PAIR(1));
-      wattroff(InfoWindow,A_BOLD);
-      mvwprintw(InfoWindow,6,1,"                                     ");
-      Puzzle[UserInputY][UserInputX] = PuzzleBuffer;
       break;
 
     default:
@@ -125,8 +148,5 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
     }
   }
 
-
-
-  getch();
   return;
 }
