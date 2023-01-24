@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <ncurses.h>
+#include <time.h>
 #include "../pseudoku.h"
 
-void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Seed)
+void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Options[3])
 {
 
   // No idea how to error-handle these lmao. Gotta read up.
@@ -30,8 +31,21 @@ void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Seed)
   MaxY = (MaxY - 36) / 2;
   MaxX = (MaxX - 72) / 2;
 
+  /* Quick Refresher on Options:
+   * Options[0] = Seed
+   * Options[1] = Numeric Difficulty
+   * Options[2] = Classic/Easy Mode
+   */
+  Options[0] = time(0);
+
   guimainmenu(MaxY,MaxX);
-  guigame(Puzzle, Answer, MaxY, MaxX, Seed);
+  guidifficulty(MaxY,MaxX,Options);
+
+  pseudokugen(Answer, Options[0]);
+  pseudokugen(Puzzle, Options[0]);
+  pseudokudel(Puzzle, Options[0], Options[1]);
+
+  guigame(Puzzle, Answer, MaxY, MaxX, Options[0]);
 
   endwin();
   return;
