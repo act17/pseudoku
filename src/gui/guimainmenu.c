@@ -1,9 +1,5 @@
 #include <ncurses.h>
-
-// Here's what we use for the version and date of release.
-char VersionName[5] = "Beta";
-char VersionNumber[6] = "1.1.0";
-char ReleaseDate[11] = "2023-01-21";
+#include "../pseudoku.h"
 
 void guimainmenu(int MaxY, int MaxX)
 {
@@ -22,8 +18,8 @@ void guimainmenu(int MaxY, int MaxX)
 
   // Then we print on our newly-created window.
   mvwprintw(MainWindow,2,29,"ACT's Pseudoku");
-  mvwprintw(MainWindow,4,29,"%s %s",VersionName,VersionNumber);
-  mvwprintw(MainWindow,5,29,"%s",ReleaseDate);
+  mvwprintw(MainWindow,4,31,"%s %s",VERSION_NUM);
+  mvwprintw(MainWindow,5,29,"%s",VERSION_DATE);
 
   mvwprintw(MainWindow,7,29,"Copyright 2023");
   mvwprintw(MainWindow,8,21,"Released under the GNU GPL 3.0");
