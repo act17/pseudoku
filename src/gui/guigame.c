@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-
-// To be updated, duh.
-char Version[11] = "Beta 1.1.0";
+#include "../pseudoku.h"
 
 void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
@@ -19,15 +17,22 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
   int UserInputY = 0;
   int PuzzleBuffer = 0;
 
+  // And the integer to check when the game is won:
+  int WinCheck = 1;
+
   // Then, as the final step of preparation, we need to mark down which
-  // of the puzzle spaces are changable.
+  // of the puzzle spaces are changable - and call our multidimensional array
+  // to mark down incorrect answers.
   int UnfilledStorage[9][9];
+  int WrongAnswers[9][9];
   for(int y = 0; y < 9; y++) {
     for(int x = 0; x < 9; x++) {
       if(Puzzle[y][x] == 0)
         UnfilledStorage[y][x] = 0;
       else
         UnfilledStorage[y][x] = 1;
+
+      WrongAnswers[y][x] = 0;
     }
   }
 
@@ -48,15 +53,15 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
   // Then we print out the information:
   wattron(InfoWindow,A_BOLD);
-  mvwprintw(InfoWindow,1,1,"ACT's Pseudoku	Version: %s",Version);
+  mvwprintw(InfoWindow,1,1,"ACT's Pseudoku	Version: %s",VERSION_NUM);
   mvwprintw(InfoWindow,2,1,"CONTROLS:");
   mvwprintw(InfoWindow,3,1,"UP/DOWN/LEFT/RIGHT - Move Cursor  ENTER - Choose Highlighted Square");
-  mvwprintw(InfoWindow,4,1,"1-9 - Enter value  S - Export Seed.");
+  mvwprintw(InfoWindow,4,1,"1-9 - Enter value  S - Export Seed.  C - Check Answers");
   mvwprintw(InfoWindow,5,1,"SEED: %d",Seed);
   wattroff(InfoWindow, A_BOLD);
 
   // Now we have to do I/O.
-  while(1) {
+  do {
 
     // We print out the current puzzle.
     for(int y = 0; y < 9; y++) {
@@ -71,6 +76,11 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
         // we print in blue.
         if(UnfilledStorage[y][x] == 0)
           wattron(MainWindow,COLOR_PAIR(4));
+
+        // But, in the case that the entry is actually incorrect,
+        // then we print in red instead.
+        if(WrongAnswers[y][x] == 1 && Puzzle[y][x] != 0)
+          wattron(MainWindow,COLOR_PAIR(3));
 
         if(Puzzle[y][x] == 0)
           mvwprintw(MainWindow,(2 * y) + 4,(4 * x) + 18," ");
@@ -118,6 +128,10 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
       UserInputX--;
       break;
 
+    case 'c':
+      WinCheck = pseudokucmp(Puzzle, Answer, WrongAnswers);
+      break;
+
     // In the case the user presses ENTER:
     case 10:
       // First, we check to see if the entry was one of the originally unfilled entries.
@@ -146,7 +160,7 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
     default:
       break;
     }
-  }
+  } while (WinCheck != 0);
 
   return;
 }
