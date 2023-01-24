@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Beta 1.1.0 (January 23rd, 2023)
+Version: Beta 1.2.0 (January 23rd, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,12 @@ Version: Beta 1.1.0 (January 23rd, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+
+  *Beta 1.2.0 - 2023/01/23*
+  - Added the file ``./src/pseudoku/pseudokucmp.c``. This includes the function ``int pseudokucmp(int Puzzle[9][9], int Answer[9][9], int Wrong[9][9])``. It compares the user-altered ``Puzzle[9][9]`` with the original ``Answer[9][9]``. In the case that an answer is wrong, and is not unfilled (I.e. equal to 0) it will mark down the Y/X coordinates under ``Wrong[9][9]`` by altering that array's entry to 1. It also increments the amount of incorrect entries and returns the value.
+  - Altered the file ``./src/gui/guigame.c`` to now have a proper way of detecting if an answer given is wrong or not. Upon pressing the ``c`` character, the program will run the function ``int pseudokucmp(...)`` and use the returned integer as a way to determine if the puzzle is completed. If so, the program will automatically exit.
+  - Altered the file ``./src/pseudoku.h`` to include the function in ``pseudokucmp.c``.
+  - Altered the files ``./src/pseudoku.h``, ``./src/gui/guigame.c``, and ``./src/gui/guimainmenu.c`` to improve the Version/Release Date system. Now, the constants ``VERSION_NUM`` and ``VERSION_DATE`` are used to define the specific version of the software (With a letter prefixing the actual number, currently "B" for "Beta" and soon to be "R" for "Release".) and the date that the specified version was released to the public on.
 
   *Beta 1.1.0 - 2023/01/23*
   - Altered the file ``./src/gui/guigame.c`` to have an improved I/O that provides the user with more information on which elements of the puzzle can be changed.
