@@ -8,8 +8,9 @@ void pseudokugen(int Puzzle[9][9], int Seed);
 void pseudokudel(int Puzzle[9][9], int Seed, int Difficulty);
 int pseudokucmp(int Puzzle[9][9], int Answer[9][9], int Wrong[9][9]);
 
-void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Seed);
+void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Options[3]);
 void guimainmenu(int MaxY, int MaxX);
+void guidifficulty(int MaxY, int MaxX, int Options[3]);
 void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed);
 
 #endif
