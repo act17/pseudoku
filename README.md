@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Beta 1.2.0 (January 23rd, 2023)
+Version: Beta 1.3.0 (January 24th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,13 @@ Version: Beta 1.2.0 (January 23rd, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+
+  *Beta 1.3.0 - 2023/01/24*
+  - Added the file ``./src/gui/guidifficulty.c``, which includes the file ``void guidifficulty.c(int MaxY, int MaxX, int Options[3])``. This creates a small menu to select the difficulty of the puzzle.
+  - Altered the file ``./src/gui/guiwrapper.c`` to now include all the functions that allow the program to properly operate. (E.g. ``void pseudokugen(...)``) Subsequently, ``./src/main.c`` has also been altered to no longer have said functions be called.
+  - Altered the file ``./src/main.c``, ``./src/guiwrapper.c``, and ``./src/pseudoku.h`` to now use a new method of storing the options - using an array known as ``Options[3]``. ``Options[0]`` will be set to the seed of the puzzle, ``Options[1]`` will be the numeric difficulty, and ``Options[2]`` will be an in-effect boolean that determines if the game will run in "Classic" or "Easy" mode. (Seed-setting and Classic/Easy mode will be added in a future update.)
+  - Altered the file ``./src/pseudoku.h`` to now include headers for ``void guidifficulty(...)``.
+  - Altered the file ``./Makefile`` to now include the new file.
 
   *Beta 1.2.0 - 2023/01/23*
   - Added the file ``./src/pseudoku/pseudokucmp.c``. This includes the function ``int pseudokucmp(int Puzzle[9][9], int Answer[9][9], int Wrong[9][9])``. It compares the user-altered ``Puzzle[9][9]`` with the original ``Answer[9][9]``. In the case that an answer is wrong, and is not unfilled (I.e. equal to 0) it will mark down the Y/X coordinates under ``Wrong[9][9]`` by altering that array's entry to 1. It also increments the amount of incorrect entries and returns the value.
