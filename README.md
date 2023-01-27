@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Beta 1.3.0 (January 24th, 2023)
+Version: Beta 1.4.0 (January 26th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -11,6 +11,15 @@ Version: Beta 1.3.0 (January 24th, 2023)
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
+  
+  *Beta 1.4.0 - 2023/01/26*
+  - Added the file ``./src/gui/guiseed.c``. This includes the function ``void guiseed(int MaxY, int MaxX, int Options[3])``. This provides the user the ability to set a custom seed, or use the current time as a seed.
+  - Altered the file ``./src/gui/guiwrapper.c`` to account for the addition of ``guiseed(...)``.
+  - Altered the file ``./src/gui/guidifficulty.c`` to now include the ability to toggle Classic or Easy mode for the puzzle.
+  - Altered the file ``./src/gui/guimainmenu.c`` to no longer have two ``%s``s in a ``mvwprintw();`` function. This corrects a printing error.
+  - Altered the file ``./src/gui/guigame.c`` to print if the game is in "EASY" or "CLASSIC" mode, but also now accounts for Easy/Classic mode, and prints the amount of wrong answers remaining upon checking.
+  - Altered the file ``./src/pseudoku.h``. Headers for ``guigame(...)`` have now been altered to use the new "Options-as-an-array" system, and ``guiseed(...)`` headers have been added.
+  - Altered the file ``./Makefile`` to account for the addition of ``guiseed.c``.
 
   *Beta 1.3.0 - 2023/01/24*
   - Added the file ``./src/gui/guidifficulty.c``, which includes the file ``void guidifficulty.c(int MaxY, int MaxX, int Options[3])``. This creates a small menu to select the difficulty of the puzzle.
