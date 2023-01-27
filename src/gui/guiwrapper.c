@@ -36,16 +36,16 @@ void guiwrapper(int Puzzle[9][9], int Answer[9][9], int Options[3])
    * Options[1] = Numeric Difficulty
    * Options[2] = Classic/Easy Mode
    */
-  Options[0] = time(0);
 
   guimainmenu(MaxY,MaxX);
+  guiseed(MaxY,MaxX,Options);
   guidifficulty(MaxY,MaxX,Options);
 
   pseudokugen(Answer, Options[0]);
   pseudokugen(Puzzle, Options[0]);
   pseudokudel(Puzzle, Options[0], Options[1]);
 
-  guigame(Puzzle, Answer, MaxY, MaxX, Options[0]);
+  guigame(Puzzle, Answer, MaxY, MaxX, Options);
 
   endwin();
   return;
