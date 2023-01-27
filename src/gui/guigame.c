@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include "../pseudoku.h"
 
-void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
+void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Options[3]) {
 
   // Setting up the colors:
   init_pair(1,COLOR_BLACK,COLOR_WHITE);
@@ -19,6 +19,9 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
   // And the integer to check when the game is won:
   int WinCheck = 1;
+
+  // And finally, an array of strings to print the mode the game is in.
+  char Mode[2][13] = {"CLASSIC","EASY"};
 
   // Then, as the final step of preparation, we need to mark down which
   // of the puzzle spaces are changable - and call our multidimensional array
@@ -57,7 +60,7 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
   mvwprintw(InfoWindow,2,1,"CONTROLS:");
   mvwprintw(InfoWindow,3,1,"UP/DOWN/LEFT/RIGHT - Move Cursor  ENTER - Choose Highlighted Square");
   mvwprintw(InfoWindow,4,1,"1-9 - Enter value  S - Export Seed.  C - Check Answers");
-  mvwprintw(InfoWindow,5,1,"SEED: %d",Seed);
+  mvwprintw(InfoWindow,5,1,"SEED: %d    MODE: %s",Options[0],Mode[Options[2]]);
   wattroff(InfoWindow, A_BOLD);
 
   // Now we have to do I/O.
@@ -78,8 +81,8 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
           wattron(MainWindow,COLOR_PAIR(4));
 
         // But, in the case that the entry is actually incorrect,
-        // then we print in red instead.
-        if(WrongAnswers[y][x] == 1 && Puzzle[y][x] != 0)
+        // and it's on 'Easy' mode, then we print in red instead.
+        if(WrongAnswers[y][x] == 1 && Puzzle[y][x] != 0 && Options[2] == 1)
           wattron(MainWindow,COLOR_PAIR(3));
 
         if(Puzzle[y][x] == 0)
@@ -130,6 +133,13 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
 
     case 'c':
       WinCheck = pseudokucmp(Puzzle, Answer, WrongAnswers);
+      // In the case there are some wrong answers:
+      wattron(InfoWindow,COLOR_PAIR(3));
+      wattron(InfoWindow,A_BOLD);
+      mvwprintw(InfoWindow,6,1,"There are %d wrong answers.    ",WinCheck);
+      wrefresh(InfoWindow);
+      wattron(InfoWindow,COLOR_PAIR(1));
+      wattroff(InfoWindow,A_BOLD);
       break;
 
     // In the case the user presses ENTER:
@@ -142,8 +152,8 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Seed) {
           mvwscanw(MainWindow,(2 * UserInputY) + 4,(4 * UserInputX) + 18,"%d",&PuzzleBuffer);
           wattron(InfoWindow,COLOR_PAIR(3));
           wattron(InfoWindow,A_BOLD);
-          wrefresh(InfoWindow);
           mvwprintw(InfoWindow,6,1,"Error! Inputted value is not valid!");
+          wrefresh(InfoWindow);
         } while(PuzzleBuffer < 1 || PuzzleBuffer > 9);
         // This routine just clears the error messages, printed above.
         noecho();
