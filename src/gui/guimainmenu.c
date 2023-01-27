@@ -18,7 +18,7 @@ void guimainmenu(int MaxY, int MaxX)
 
   // Then we print on our newly-created window.
   mvwprintw(MainWindow,2,29,"ACT's Pseudoku");
-  mvwprintw(MainWindow,4,31,"%s %s",VERSION_NUM);
+  mvwprintw(MainWindow,4,31,"%s",VERSION_NUM);
   mvwprintw(MainWindow,5,29,"%s",VERSION_DATE);
 
   mvwprintw(MainWindow,7,29,"Copyright 2023");
