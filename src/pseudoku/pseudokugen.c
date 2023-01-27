@@ -40,53 +40,53 @@ void pseudokugen(int Puzzle[9][9], int Seed)
   // Before moving onto the next element of the array, however, it will check
   // all the series before it to see if the number has already been generated.
   for (int i = 1; i < 9; i++)
+  {
+
+    // This while-loop will continue until an original number is found.
+    while (OverlapCheck < i)
     {
 
-      // This while-loop will continue until an original number is found.
-      while (OverlapCheck < i)
-        {
+      // This generates a new random number from 1 through 9, inclusive.
+      InitialSeries[i] = rand() % 9 + 1;
 
-          // This generates a new random number from 1 through 9, inclusive.
-          InitialSeries[i] = rand() % 9 + 1;
+      // This goes through all the elements filled sofar.
+      for (int j = 0; j < i; j++)
+      {
 
-          // This goes through all the elements filled sofar.
-          for (int j = 0; j < i; j++)
-            {
+        // If they aren't equal, we signal that the number is original.
+        if (InitialSeries[i] != InitialSeries[j])
+          OverlapCheck++;
 
-              // If they aren't equal, we signal that the number is original.
-              if (InitialSeries[i] != InitialSeries[j])
-                OverlapCheck++;
-
-              // If one unoriginal element is found, however, the program is
-              // instructed to generate a new number and reset the original counter
-              // (OverlapCheck)
-              else
-                OverlapCheck = 0;
-            }
-        }
-
-      // Once an original number is found, the original counter is reset.
-      OverlapCheck = 0;
+        // If one unoriginal element is found, however, the program is
+        // instructed to generate a new number and reset the original counter
+        // (OverlapCheck)
+        else
+          OverlapCheck = 0;
+      }
     }
+
+    // Once an original number is found, the original counter is reset.
+    OverlapCheck = 0;
+  }
 
   // The following is exactly the same process as above - but with a few things
   // switched around to simply generate 0 through 8 inclusive on a different
   // array. Extra commenting has been removed to compress the block of code.
   for (int i = 1; i < 9; i++)
+  {
+    while (OverlapCheck < i)
     {
-      while (OverlapCheck < i)
-        {
-          RowOffset[i] = rand() % 9;
-          for (int j = 0; j < i; j++)
-            {
-              if (RowOffset[i] != RowOffset[j])
-                OverlapCheck++;
-              else
-                OverlapCheck = 0;
-            }
-        }
-      OverlapCheck = 0;
+      RowOffset[i] = rand() % 9;
+      for (int j = 0; j < i; j++)
+      {
+        if (RowOffset[i] != RowOffset[j])
+          OverlapCheck++;
+        else
+          OverlapCheck = 0;
+      }
     }
+    OverlapCheck = 0;
+  }
 
   // The next step is to write to the initially passed MD Array Puzzle.
   // This process writes all the elements of InitialArray to Puzzle - using
@@ -94,29 +94,29 @@ void pseudokugen(int Puzzle[9][9], int Seed)
   // This creates a pseudorandomly generated Sudoku puzzle - without the
   // 3x3 tiles being fixed.
   for (int y = 0; y < 9; y++)
+  {
+
+    // First we set the offset for this row by using the RowOffset array.
+    OffsetOverflowCheck = RowOffset[y];
+
+    for (int x = 0; x < 9; x++)
     {
 
-      // First we set the offset for this row by using the RowOffset array.
-      OffsetOverflowCheck = RowOffset[y];
+      // Then we write to the Puzzle that the current element of
+      // the current row is equal to our initial combination, plus the
+      // offset.
+      Puzzle[y][x] = InitialSeries[OffsetOverflowCheck];
 
-      for (int x = 0; x < 9; x++)
-        {
+      // In the case that we have reached the end of the array (8),
+      // we reset the offset to zero.
+      if (OffsetOverflowCheck == 8)
+        OffsetOverflowCheck = 0;
 
-          // Then we write to the Puzzle that the current element of
-          // the current row is equal to our initial combination, plus the
-          // offset.
-          Puzzle[y][x] = InitialSeries[OffsetOverflowCheck];
-
-          // In the case that we have reached the end of the array (8),
-          // we reset the offset to zero.
-          if (OffsetOverflowCheck == 8)
-            OffsetOverflowCheck = 0;
-
-          // Otherwise, we add one to the offset.
-          else
-            OffsetOverflowCheck++;
-        }
+      // Otherwise, we add one to the offset.
+      else
+        OffsetOverflowCheck++;
     }
+  }
 
   return;
 }
