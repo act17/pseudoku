@@ -1,17 +1,27 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Beta 1.4.0 (January 26th, 2023)
+Version: Beta 1.4.1 (January 27th, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
 
-# Compiling and Usage
-  To compile Pseudoku, simply run the command ``make`` in the source directory. You must have ``gcc`` installed in order to compile the program!
+# Compiling, Required Libraries, and Usage
+
+  To compile Pseudoku, simply run the command ``make`` in the source directory.
+
+*For Debian, Ubuntu, and Linux Mint, the following packages are needed:*
+  ```
+  build-essential libncurses6 libncurses-dev
+  ```
   To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
 
 # Changelog
-  
+
+  *Beta 1.4.1 - 2023/01/27*
+  - Altered the file ``./Makefile`` to now include a formatting script. Simply run ``make format`` to subject 
+  - Altered a section in ``./README.md`` to now include required packages for Debian/Ubuntu/Mint.
+
   *Beta 1.4.0 - 2023/01/26*
   - Added the file ``./src/gui/guiseed.c``. This includes the function ``void guiseed(int MaxY, int MaxX, int Options[3])``. This provides the user the ability to set a custom seed, or use the current time as a seed.
   - Altered the file ``./src/gui/guiwrapper.c`` to account for the addition of ``guiseed(...)``.
