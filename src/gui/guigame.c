@@ -10,6 +10,7 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Options
   init_pair(2,COLOR_CYAN,COLOR_CYAN);
   init_pair(3,COLOR_WHITE,COLOR_RED);
   init_pair(4,COLOR_BLACK,COLOR_BLUE);
+  init_pair(5,COLOR_WHITE,COLOR_GREEN);
 
   // We also need to call the four integers used for user input:
   int UserInput;
@@ -59,7 +60,7 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Options
   mvwprintw(InfoWindow,1,1,"ACT's Pseudoku	Version: %s",VERSION_NUM);
   mvwprintw(InfoWindow,2,1,"CONTROLS:");
   mvwprintw(InfoWindow,3,1,"UP/DOWN/LEFT/RIGHT - Move Cursor  ENTER - Choose Highlighted Square");
-  mvwprintw(InfoWindow,4,1,"1-9 - Enter value  S - Export Seed.  C - Check Answers");
+  mvwprintw(InfoWindow,4,1,"1-9 - Enter Value  C - Check Answers");
   mvwprintw(InfoWindow,5,1,"SEED: %d    MODE: %s",Options[0],Mode[Options[2]]);
   wattroff(InfoWindow, A_BOLD);
 
@@ -133,13 +134,20 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Options
 
     case 'c':
       WinCheck = pseudokucmp(Puzzle, Answer, WrongAnswers);
-      // In the case there are some wrong answers:
-      wattron(InfoWindow,COLOR_PAIR(3));
-      wattron(InfoWindow,A_BOLD);
-      mvwprintw(InfoWindow,6,1,"There are %d wrong answers.    ",WinCheck);
-      wrefresh(InfoWindow);
-      wattron(InfoWindow,COLOR_PAIR(1));
-      wattroff(InfoWindow,A_BOLD);
+      if(WinCheck != 0) {
+        // In the case there are some wrong answers:
+        wattron(InfoWindow,COLOR_PAIR(3));
+        wattron(InfoWindow,A_BOLD);
+        // In the case we're also in easy mode:
+        if(Options[2] == 1)
+          mvwprintw(InfoWindow,6,1,"There are %d wrong answers.    ",WinCheck);
+        // In the case we're in classic mode:
+        else
+          mvwprintw(InfoWindow,6,1,"Solution is not correct!       ");
+        wrefresh(InfoWindow);
+        wattron(InfoWindow,COLOR_PAIR(1));
+        wattroff(InfoWindow,A_BOLD);
+      }
       break;
 
     // In the case the user presses ENTER:
@@ -171,6 +179,15 @@ void guigame(int Puzzle[9][9], int Answer[9][9], int MaxY, int MaxX, int Options
       break;
     }
   } while (WinCheck != 0);
+
+  // Now we print the success message:
+  wattron(InfoWindow,COLOR_PAIR(5));
+  wattron(InfoWindow,A_BOLD);
+  mvwprintw(InfoWindow,6,1,"Congratulations! You won!");
+  wrefresh(InfoWindow);
+  wrefresh(stdscr);
+
+  getch();
 
   return;
 }
