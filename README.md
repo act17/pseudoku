@@ -1,7 +1,7 @@
 # pseudoku
 A Sudoku-like Puzzle Game
 
-Version: Beta 1.4.1 (January 27th, 2023)
+Version: Release 1.0.0 (January 31st, 2023)
 
 # Description
   Pseudoku is a puzzle game where 81 numbers are arranged in a 9x9 grid. The numbers do not repeat in vertical columns or horizontal rows. Some numbers will be blanked out, and the objective of the game is to deduct which numbers replace the blank spaces.
@@ -14,12 +14,16 @@ Version: Beta 1.4.1 (January 27th, 2023)
   ```
   build-essential libncurses6 libncurses-dev
   ```
-  To run Pseudoku, simply run the binary that you've compiled. It only prints out a completed Pseudoku puzzle.
-
+  To run Pseudoku, simply run the binary that you've compiled.
+  
 # Changelog
 
+  *Release 1.0.0 - 2023/01/31*
+  - Altered the file ``./src/gui/guigame.c`` to have improved information printed in the bottom window. It also now has a "Win" condition.
+  - Altered the file ``./Makefile`` to now include a "``debug``" target which compiles the program without optimization and ``-g``. The regular Make target - ``pseudoku`` - now compiles with ``-O2``.
+
   *Beta 1.4.1 - 2023/01/27*
-  - Altered the file ``./Makefile`` to now include a formatting script. Simply run ``make format`` to subject 
+  - Altered the file ``./Makefile`` to now include a formatting script. Simply run ``make format`` to subject all ``*.c`` files used by ``make`` to ``astyle``.
   - Altered a section in ``./README.md`` to now include required packages for Debian/Ubuntu/Mint.
 
   *Beta 1.4.0 - 2023/01/26*
