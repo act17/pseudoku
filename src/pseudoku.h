@@ -1,8 +1,8 @@
 #ifndef __PSEUDOKU_H
 #define __PSEUDOKU_H
 
-static const char VERSION_NUM[8] = "B1.4.1";
-static const char VERSION_DATE[11] = "2023-01-27";
+static const char VERSION_NUM[8] = "R1.0.0";
+static const char VERSION_DATE[11] = "2023-01-31";
 
 void pseudokugen(int Puzzle[9][9], int Seed);
 void pseudokudel(int Puzzle[9][9], int Seed, int Difficulty);
